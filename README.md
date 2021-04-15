@@ -207,12 +207,16 @@ We publish various [Docker Mods](https://github.com/linuxserver/docker-mods) to 
 
 ## Support Info
 
-* Shell access whilst the container is running: `docker exec -it bookstack /bin/bash`
-* To monitor the logs of the container in realtime: `docker logs -f bookstack`
-* container version number
+* Shell access whilst the container is running
+  * `docker exec -it bookstack /bin/bash`
+* Monitor the logs of the container in realtime
+  * `docker logs -f bookstack`
+* Container version number
   * `docker inspect -f '{{ index .Config.Labels "build_version" }}' bookstack`
-* image version number
+* Image version number
   * `docker inspect -f '{{ index .Config.Labels "build_version" }}' ghcr.io/linuxserver/bookstack`
+* Backup Database- Replace < . . > with the actual values from your compose file.
+  * `sudo docker exec <DOCKER-CONTAINER-NAME> /usr/bin/mysqldump -u <USER> -p <DATABASE> > <DATABASE>.backup.sql`
 
 ## Updating Info
 
