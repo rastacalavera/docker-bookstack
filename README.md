@@ -215,16 +215,26 @@ We publish various [Docker Mods](https://github.com/linuxserver/docker-mods) to 
   * `docker inspect -f '{{ index .Config.Labels "build_version" }}' bookstack`
 * Image version number
   * `docker inspect -f '{{ index .Config.Labels "build_version" }}' ghcr.io/linuxserver/bookstack`
-* Backup Database, configuration and uploaded files- Replace < . . > with the actual values from your compose file.
-  * Database- `sudo docker exec <DOCKER-CONTAINER-NAME> /usr/bin/ mysqldump -u <USER> -p <DATABASE> > <DATABASE>.backup.sql`
+* Backup Database, configuration and uploaded files
+  * Database- `sudo docker exec bookstack_db /usr/bin/ mysqldump -u bookstack -p bookstackapp bookstack.backup.sql`
   * Configuration and files- 
     1. Access the container `sudo docker exec -it bookstack bash`
     2. Zip the files- `tar -czvf bookstack-files-backup.tar.gz /var/www/html/.env /var/www/html/public/uploads /var/www/html/storage/uploads`
     3. Exit the container by typing exit or using crtl+d
-    4. Copy files from docker to host maching- `sudo docker cp BOOKSTACK_CONTAINER:/bookstack-files-backup.tar.gz ./`
+    4. Copy files from docker to host maching- `sudo docker cp bookstack:/bookstack-files-backup.tar.gz ./`
 * Restore Database, configuration and uploaded files
-
-
+  1. Copy database to container
+  * `sudo docker cp ./bookstack.backup.sql bookstack_db:/`
+  2. Copy configuration and uploaded files
+  * `sudo docker cp ./bookstack-files-backup.tar.gz bookstack:/var/www/html`
+  3. Enter and restore database
+  * `sudo docker exec -it bookstack_db bash`
+  * `mysql -u bookstack -p bookstackapp < bookstack.backup.sql`
+  * `exit`
+  4. Enter and restore configuration and uploaded files
+  * `sudo docker exec -it bookstack bash`
+  * `tar -xvzf bookstack-files-backup.tar.gz`
+  * `exit`
 ## Updating Info
 
 Most of our images are static, versioned, and require an image update and container recreation to update the app inside. With some exceptions (ie. nextcloud, plex), we do not recommend or support updating apps inside the container. Please consult the [Application Setup](#application-setup) section above to see if it is recommended for the image.
