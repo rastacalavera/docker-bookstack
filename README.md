@@ -216,7 +216,7 @@ We publish various [Docker Mods](https://github.com/linuxserver/docker-mods) to 
 * Image version number
   * `docker inspect -f '{{ index .Config.Labels "build_version" }}' ghcr.io/linuxserver/bookstack`
 * Backup Database, configuration and uploaded files
-  * Database- `sudo docker exec bookstack_db /usr/bin/ mysqldump -u bookstack -p bookstackapp bookstack.backup.sql`
+  * Database- `sudo docker exec bookstack_db /usr/bin/ mysqldump -u bookstack -p bookstackapp > bookstack.backup.sql`
   * Configuration and files- 
     1. Access the container `sudo docker exec -it bookstack bash`
     2. Zip the files- `tar -czvf bookstack-files-backup.tar.gz /var/www/html/.env /var/www/html/public/uploads /var/www/html/storage/uploads`
