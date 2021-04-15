@@ -221,7 +221,7 @@ We publish various [Docker Mods](https://github.com/linuxserver/docker-mods) to 
     1. Access the container `sudo docker exec -it bookstack bash`
     2. Zip the files- `tar -czvf bookstack-files-backup.tar.gz /var/www/html/.env /var/www/html/public/uploads /var/www/html/storage/uploads`
     3. Exit the container by typing exit or using crtl+d
-    4. Copy files from docker to host maching- `sudo docker cp BOOKSTACK_CONTAINER:/var/www/html/bookstack/bookstack-files-backup.tar.gz ./`
+    4. Copy files from docker to host maching- `sudo docker cp BOOKSTACK_CONTAINER:/bookstack-files-backup.tar.gz ./`
 * Restore Database, configuration and uploaded files
 
 
